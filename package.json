@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"oauth4webapi": "^2.3.0",
 		"open-props": "^1.5.10",
 		"pino": "^8.14.1"
 	}
