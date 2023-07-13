@@ -1,0 +1,21 @@
+{
+	"cssvar.files": [
+		"./node_modules/open-props/open-props.min.css",
+		"./src/routes/+layout.svelte"
+		// if you have an alternative path to where your styles are located
+		// you can add it in this array of files
+	],
+	"cssvar.ignore": [],
+	"cssvar.extensions": [
+		"css",
+		"scss",
+		"sass",
+		"less",
+		"postcss",
+		"svelte",
+		"ts",
+		"tsx",
+		"js",
+		"jsx"
+	]
+}
