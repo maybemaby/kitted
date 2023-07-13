@@ -1,18 +1,15 @@
-# create-svelte
+# svelte-ts-starter
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+My personal opinionated SvelteKit starter.
 
-## Creating a project
+Features:
+- [open-props](https://open-props.style/) for styling
+- [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/) for unit testing
+- Components:
+  - ThemeSwitcher (dark, light, system)
+- Server stuff:
+  - [pino](https://github.com/pinojs/pino) for logging
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
 ## Developing
 

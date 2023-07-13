@@ -1,6 +1,6 @@
-<div>
+<main>
 	<slot />
-</div>
+</main>
 
 <style>
 	@import 'open-props/postcss/style';
@@ -74,5 +74,9 @@
 		flex-direction: column;
 		justify-content: space-between;
 		font-size: 16px;
+	}
+
+	main {
+		height: 100%;
 	}
 </style>

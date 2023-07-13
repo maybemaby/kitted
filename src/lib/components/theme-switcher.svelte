@@ -38,9 +38,11 @@
 	};
 </script>
 
-<button on:click={setLight}>
-  <CarbonSun />
-</button>
-<button on:click={setDark}>
-	<CarbonMoon />
-</button>
+<div>
+	<button on:click={setLight}>
+		<CarbonSun />
+	</button>
+	<button on:click={setDark}>
+		<CarbonMoon />
+	</button>
+</div>

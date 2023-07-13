@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"open-props": "^1.5.10"
+		"open-props": "^1.5.10",
+		"pino": "^8.14.1"
 	}
 }
