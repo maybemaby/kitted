@@ -1,23 +1,10 @@
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import pino from 'pino';
 
-const logger = pino({
-	formatters: {
-		log(object) {
-			if (object instanceof Request) {
-				const url = new URL(object.url);
-				return {
-					method: object.method,
-					url: object.url,
-					path: url.pathname,
-					query: url.searchParams.toString()
-				};
-			}
-			return object;
-		}
-	}
-});
+import { logger } from '$lib/logger';
+import { serve, client } from '$lib/inngest';
+import { helloWorld } from '$lib/jobs/hello-world';
+import type { RequestEvent } from './routes/api/$types';
 
 const handleLogging = (async ({ event, resolve }) => {
 	event.locals.logger = logger;
@@ -43,4 +30,17 @@ const handleLogging = (async ({ event, resolve }) => {
 	return res;
 }) satisfies Handle;
 
-export const handle = sequence(handleLogging);
+const handleInngest = (async ({ event, resolve }) => {
+	const isInngest = new URL(event.request.url).pathname.startsWith('/api/inngest');
+
+	if (!isInngest) {
+		return await resolve(event);
+	}
+
+	const handler = serve(client, [helloWorld]) as (
+		req: Parameters<Handle>['0']['event']
+	) => Response;
+	return handler(event);
+}) satisfies Handle;
+
+export const handle = sequence(handleLogging, handleInngest);
