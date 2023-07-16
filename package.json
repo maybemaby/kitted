@@ -42,6 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"class-variance-authority": "^0.6.1",
 		"inngest": "^2.3.0",
 		"oauth4webapi": "^2.3.0",
 		"open-props": "^1.5.10",

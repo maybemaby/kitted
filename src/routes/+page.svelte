@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/components/button.svelte';
 	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
 </script>
 

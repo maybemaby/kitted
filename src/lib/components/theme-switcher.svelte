@@ -2,6 +2,7 @@
 	import CarbonMoon from '~icons/carbon/moon';
 	import CarbonSun from '~icons/carbon/sun';
 	import { onMount } from 'svelte';
+	import Button from './button.svelte';
 	let theme: string;
 
 	onMount(() => {
@@ -38,11 +39,41 @@
 	};
 </script>
 
-<div>
-	<button on:click={setLight}>
+<div class="theme-toggle">
+	<Button class="switcher" rounded={2} sz="md" on:click={setLight}>
 		<CarbonSun />
-	</button>
-	<button on:click={setDark}>
+	</Button>
+	<Button class="switcher" variant="primary" rounded={2} sz="md" on:click={setDark}>
 		<CarbonMoon />
-	</button>
+	</Button>
 </div>
+
+<style>
+	.theme-toggle {
+		display: flex;
+		gap: var(--size-2);
+	}
+
+	.theme-toggle :global(svg) {
+		display: block;
+	}
+
+	.theme-toggle :global(.switcher) {
+		cursor: pointer;
+		border: none;
+		background: var(--primary);
+		color: var(--on-primary-text);
+		font-size: var(--font-size-3);
+		height: var(--size-8);
+		width: var(--size-8);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-3);
+		transition: background 0.2s var(--ease-out-2);
+	}
+
+	.theme-toggle :global(.switcher:hover) {
+		background: var(--primary-4);
+	}
+</style>

@@ -1,4 +1,4 @@
-import oauth from 'oauth4webapi';
+import * as oauth from 'oauth4webapi';
 import type { RequestEvent } from '@sveltejs/kit';
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private';
 

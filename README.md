@@ -5,10 +5,12 @@ My personal opinionated SvelteKit starter.
 Features:
 - [open-props](https://open-props.style/) for styling
 - [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/) for unit testing
+- 
 - Components:
   - ThemeSwitcher (dark, light, system)
 - Server stuff:
   - [pino](https://github.com/pinojs/pino) for logging
+  - [inngest](https://www.inngest.com/) for serverless queueing
 
 
 ## Developing
