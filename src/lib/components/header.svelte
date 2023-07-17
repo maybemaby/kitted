@@ -1,8 +1,14 @@
+<script>
+	import Button from './button.svelte';
+</script>
+
 <header>
 	<a class="logo" href="/"> Kitted </a>
 	<nav>
-		<a href="/auth/register">Register</a>
-		<a href="/auth/login">Login</a>
+		<a href="/auth/signup">Sign up</a>
+		<a href="/auth/login">
+			<Button type="button" rounded={2}>Login</Button>
+		</a>
 	</nav>
 </header>
 
@@ -24,5 +30,6 @@
 		display: flex;
 		gap: var(--size-6);
 		font-size: var(--font-size-2);
+		align-items: baseline;
 	}
 </style>

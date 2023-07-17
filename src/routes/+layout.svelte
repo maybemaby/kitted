@@ -29,9 +29,9 @@
 		--link-hover: var(--blue-5);
 		--on-primary-text: var(--stone-1);
 
-		--surface: var(--stone-7);
-		--surface-2: var(--stone-8);
-		--surface-3: var(--stone-9);
+		--surface: var(--stone-0);
+		--surface-2: var(--stone-2);
+		--surface-3: var(--stone-3);
 
 		--primary: var(--gray-11);
 		--primary-2: var(--gray-10);
@@ -55,12 +55,31 @@
 			--background: var(--gray-10);
 			--text: var(--stone-2);
 
+			--surface: var(--gray-9);
+			--surface-2: var(--gray-8);
+			--surface-3: var(--gray-7);
+
 			--primary: var(--gray-0);
 			--primary-2: var(--gray-1);
 			--primary-3: var(--gray-2);
 			--primary-4: var(--gray-3);
 			--on-primary-text: var(--stone-11);
 		}
+	}
+
+	:global(body.dark) {
+		--background: var(--gray-10);
+		--text: var(--stone-2);
+
+		--surface: var(--gray-9);
+		--surface-2: var(--gray-8);
+		--surface-3: var(--gray-7);
+
+		--primary: var(--gray-0);
+		--primary-2: var(--gray-1);
+		--primary-3: var(--gray-2);
+		--primary-4: var(--gray-3);
+		--on-primary-text: var(--stone-11);
 	}
 
 	:global(:root) {
@@ -82,17 +101,6 @@
 		:global(:root) {
 			--x-pad-std: var(--size-fluid-9);
 		}
-	}
-
-	:global(body.dark) {
-		--background: var(--gray-10);
-		--text: var(--stone-2);
-
-		--primary: var(--gray-0);
-		--primary-2: var(--gray-1);
-		--primary-3: var(--gray-2);
-		--primary-4: var(--gray-3);
-		--on-primary-text: var(--stone-11);
 	}
 
 	:global(html) {

@@ -3,6 +3,7 @@
 	import CarbonSun from '~icons/carbon/sun';
 	import { onMount } from 'svelte';
 	import Button from './button.svelte';
+	import VisuallyHidden from './visually-hidden.svelte';
 	let theme: string;
 
 	onMount(() => {
@@ -42,20 +43,18 @@
 <div class="theme-toggle">
 	<Button class="switcher" rounded={2} sz="md" on:click={setLight}>
 		<CarbonSun />
+		<VisuallyHidden>Light Mode</VisuallyHidden>
 	</Button>
 	<Button class="switcher" variant="primary" rounded={2} sz="md" on:click={setDark}>
 		<CarbonMoon />
+		<VisuallyHidden>Dark Mode</VisuallyHidden>
 	</Button>
 </div>
 
 <style>
 	.theme-toggle {
 		display: flex;
-		gap: var(--size-2);
-	}
-
-	.theme-toggle :global(svg) {
-		display: block;
+		gap: var(--size-4);
 	}
 
 	.theme-toggle :global(.switcher) {
@@ -66,10 +65,10 @@
 		font-size: var(--font-size-3);
 		height: var(--size-8);
 		width: var(--size-8);
+		padding: 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: var(--radius-3);
 		transition: background 0.2s var(--ease-out-2);
 	}
 

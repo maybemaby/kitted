@@ -22,7 +22,11 @@
 
 	interface $$Props extends HTMLButtonAttributes, ButtonBaseProps, BoxProps {
 		sz?: 'sm' | 'md' | 'lg';
+		class?: string | undefined;
 	}
+
+	let cls: $$Props['class'] = undefined;
+	export { cls as class };
 
 	export let variant: $$Props['variant'] = 'primary';
 	export let borderWidth: $$Props['borderWidth'] = 0;
@@ -32,7 +36,7 @@
 </script>
 
 <button
-	class={cx(button({ variant }), boxVariants({ borderWidth, rounded, shadow }), sz)}
+	class={cx(button({ variant }), boxVariants({ borderWidth, rounded, shadow }), sz, cls)}
 	on:click
 	on:mousedown
 	on:mouseup
@@ -45,6 +49,13 @@
 	.button {
 		cursor: pointer;
 		transition: background 0.2s var(--ease-out-2);
+		outline-width: 2px;
+		outline-offset: 3px;
+	}
+
+	/* Prevents The extra spacing at bottom of svg buttons. */
+	.button > :global(svg) {
+		display: block;
 	}
 
 	.button.sm {
@@ -71,6 +82,11 @@
 		background: var(--primary-4);
 	}
 
+	.primary:focus {
+		outline-color: var(--primary);
+		outline-style: solid;
+	}
+
 	.outline {
 		background: transparent;
 		color: var(--text);
@@ -82,9 +98,10 @@
 		color: var(--on-primary-text);
 	}
 
-	.ghost {
+	.button.ghost {
 		background: transparent;
 		color: var(--text);
+		padding: 0;
 	}
 
 	.ghost:hover {
