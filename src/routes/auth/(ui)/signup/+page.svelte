@@ -6,7 +6,7 @@
 
 <Card class="auth__content" rounded={2}>
 	<h1>Sign up</h1>
-	<form>
+	<form method="post">
 		<div class="row gap-5 names">
 			<div class="stack gap-2">
 				<label for="first_name">First Name</label>
@@ -20,9 +20,9 @@
 		<label for="email">Email</label>
 		<Input type="email" id="email" name="email" required />
 		<label for="password">Password</label>
-		<Input type="password" id="password" name="password" required />
+		<Input type="password" id="password" name="password" required minlength={8} />
 		<label for="password_confirm">Confirm Password</label>
-		<Input type="password" id="password_confirm" name="password_confirm" required />
+		<Input type="password" id="password_confirm" name="password_confirm" required minlength={8} />
 		<Button class="auth_submit" rounded={2} type="submit">Login</Button>
 	</form>
 	<div>
@@ -31,6 +31,22 @@
 </Card>
 
 <style>
+	:global(.auth__content) {
+		padding: var(--size-6);
+		border: 1px solid var(--surface-2);
+		width: 95%;
+	}
+
+	:global(.auth_submit) {
+		margin-top: var(--size-3);
+	}
+
+	@media (--sm-n-above) {
+		:global(.auth__content) {
+			width: clamp(400px, 60vw, 800px);
+		}
+	}
+
 	h1 {
 		font-size: var(--font-size-4);
 		font-weight: var(--font-weight-5);

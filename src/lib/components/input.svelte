@@ -126,5 +126,6 @@
 		background: transparent;
 		width: 100%;
 		font-size: var(--fs, inherit);
+		color: var(--text);
 	}
 </style>

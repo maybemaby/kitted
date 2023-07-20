@@ -5,6 +5,17 @@ import { logger } from '$lib/logger';
 import { serve, client } from '$lib/inngest';
 import { helloWorld } from '$lib/jobs/hello-world';
 import type { RequestEvent } from './routes/api/$types';
+import { SESSION_KEY } from '$env/static/private';
+
+const handleAuth = (async ({ event, resolve }) => {
+	const session = event.cookies.get(SESSION_KEY);
+
+	// Check session is valid
+
+	event.locals.isLoggedIn = !!session;
+
+	return await resolve(event);
+}) satisfies Handle;
 
 const handleLogging = (async ({ event, resolve }) => {
 	event.locals.logger = logger;
@@ -43,4 +54,4 @@ const handleInngest = (async ({ event, resolve }) => {
 	return handler(event);
 }) satisfies Handle;
 
-export const handle = sequence(handleLogging, handleInngest);
+export const handle = sequence(handleLogging, handleAuth);

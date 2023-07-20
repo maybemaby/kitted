@@ -2,11 +2,44 @@
 	import Button from '$lib/components/button.svelte';
 	import Card from '$lib/components/card.svelte';
 	import Input from '$lib/components/input.svelte';
+	import CarbonLogoGithub from '~icons/carbon/logo-github';
+	import LogosGoogleIcon from '~icons/logos/google-icon';
 </script>
 
 <Card class="auth__content" rounded={2}>
 	<h1>Login</h1>
-	<form>
+	<div class="providers stack gap-3">
+		<a href="/auth/github">
+			<Button
+				class="row justify-center gap-4 items-center"
+				--btn-w="100%"
+				variant="primary"
+				rounded={2}
+			>
+				<CarbonLogoGithub />
+				Login with Github
+			</Button>
+		</a>
+		<a href="/auth/google">
+			<Button
+				class="row justify-center gap-4 items-center"
+				--btn-w="100%"
+				variant="primary"
+				rounded={2}
+			>
+				<LogosGoogleIcon />
+				Login with Google
+			</Button>
+		</a>
+	</div>
+
+	<div class="row items-center gap-4">
+		<div class="separator" />
+		<p>Or</p>
+		<div class="separator" />
+	</div>
+
+	<form method="post">
 		<label for="email">Email</label>
 		<Input type="email" id="email" name="email" required />
 		<label for="password">Password</label>
@@ -22,6 +55,20 @@
 	h1 {
 		font-size: var(--font-size-4);
 		font-weight: var(--font-weight-5);
+	}
+
+	.providers {
+		margin: var(--size-6) 0;
+	}
+
+	.providers > a {
+		width: 100%;
+	}
+
+	.separator {
+		flex: 1;
+		height: 2px;
+		background: var(--text);
 	}
 
 	form {

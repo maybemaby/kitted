@@ -1,14 +1,22 @@
 <script>
 	import Button from './button.svelte';
+
+	export let loggedIn = false;
 </script>
 
 <header>
 	<a class="logo" href="/"> Kitted </a>
 	<nav>
-		<a href="/auth/signup">Sign up</a>
-		<a href="/auth/login">
-			<Button type="button" rounded={2}>Login</Button>
-		</a>
+		{#if loggedIn}
+			<form action="/auth/logout" method="post">
+				<Button type="submit" rounded={2}>Logout</Button>
+			</form>
+		{:else}
+			<a href="/auth/signup">Sign up</a>
+			<a href="/auth/login">
+				<Button type="button" rounded={2}>Login</Button>
+			</a>
+		{/if}
 	</nav>
 </header>
 

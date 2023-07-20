@@ -35,6 +35,11 @@
 	export let sz: $$Props['sz'] = 'md';
 </script>
 
+<!-- 
+	@component
+	**parameter** --btn-w: button width css variable
+	
+-->
 <button
 	class={cx(button({ variant }), boxVariants({ borderWidth, rounded, shadow }), sz, cls)}
 	on:click
@@ -51,6 +56,7 @@
 		transition: background 0.2s var(--ease-out-2);
 		outline-width: 2px;
 		outline-offset: 3px;
+		width: var(--btn-w);
 	}
 
 	/* Prevents The extra spacing at bottom of svg buttons. */
@@ -104,7 +110,7 @@
 		padding: 0;
 	}
 
-	.ghost:hover {
+	.button.ghost:hover {
 		/* background: hsl(var(--gray-8-hsl) / 10%); */
 		background: var(--stone-3);
 	}

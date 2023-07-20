@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
 	import Header from '$lib/components/header.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
-<Header />
+<Header loggedIn={data.isLoggedIn} />
 <main>
 	<slot />
 </main>

@@ -8,6 +8,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			logger: pino.Logger;
+			isLoggedIn: boolean;
 		}
 		// interface PageData {}
 		// interface Platform {}
