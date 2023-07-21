@@ -10,6 +10,7 @@ import {
 import { logger } from '$lib/logger';
 import type { Events } from '$lib/server/jobs/types';
 
+// TODO: prevent side effect
 export const client = new Inngest({
 	name: 'sveltekit-ts-starter',
 	logger,

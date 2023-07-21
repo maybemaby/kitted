@@ -1,4 +1,4 @@
-import { client } from '$lib/server/inngest';
+import { client } from '$lib/server/jobs/inngest';
 
 export type HelloWorldEvent = {
 	name: 'test/hello.world';

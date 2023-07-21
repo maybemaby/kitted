@@ -2,10 +2,12 @@ import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { logger } from '$lib/logger';
-import { serve, client } from '$lib/inngest';
-import { helloWorld } from '$lib/jobs/hello-world';
-import type { RequestEvent } from './routes/api/$types';
+import { serve, client } from '$lib/server/jobs/inngest';
+import { helloWorld } from '$lib/server/jobs/hello-world';
 import { SESSION_KEY } from '$env/static/private';
+import { createPingQueue } from '$lib/server/jobs/bull/queues';
+
+const pingQueue = createPingQueue();
 
 const handleAuth = (async ({ event, resolve }) => {
 	const session = event.cookies.get(SESSION_KEY);
@@ -54,4 +56,12 @@ const handleInngest = (async ({ event, resolve }) => {
 	return handler(event);
 }) satisfies Handle;
 
-export const handle = sequence(handleLogging, handleAuth);
+const handleBullMq = (async ({ event, resolve }) => {
+	event.locals.queues = {
+		ping: pingQueue
+	};
+
+	return await resolve(event);
+}) satisfies Handle;
+
+export const handle = sequence(handleLogging, handleAuth, handleBullMq);

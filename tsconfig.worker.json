@@ -8,8 +8,10 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true
+		"strict": true,
+		"outDir": "workerbuild"
 	},
+	"exclude": ["**/*.{spec,test}.{js,ts}", "./tests"],
 	"ts-node": {
 		"compilerOptions": {
 			"esModuleInterop": true

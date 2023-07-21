@@ -15,6 +15,7 @@ Features:
 - Server stuff:
   - [pino](https://github.com/pinojs/pino) for logging
   - [inngest](https://www.inngest.com/) for serverless queueing
+  - [bullmq](https://github.com/taskforcesh/bullmq) for serverful queueing
   - [oauth4webapi](https://github.com/panva/oauth4webapi) and some wrapper code for OAuth.
     - Github and Google providers included
 
@@ -45,11 +46,32 @@ To create a production version of your app:
 
 ```bash
 npm run build
+
+# Node Adapter
+npm run build:node
 ```
 
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+To build the bullmq worker:
+
+```bash
+npm run build:worker
+```
+
+## Running
+
+Node app:
+```bash
+npm run start:node
+```
+
+Worker:
+```bash
+npm run start:worker
+```
 
 ## Design Decisions
 
