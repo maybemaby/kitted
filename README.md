@@ -5,13 +5,8 @@ My personal opinionated SvelteKit starter.
 Features:
 - [open-props](https://open-props.style/) for styling
 - [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/) for unit testing
-- Components:
-  - ThemeSwitcher (dark, light, system)
-  - Card
-  - Button
-  - Visually Hidden
-  - Input
-  - Portal
+- [class-variance-authority](https://github.com/joe-bell/cva) for design systems
+- Dark/light themes
 - Server stuff:
   - [pino](https://github.com/pinojs/pino) for logging
   - [inngest](https://www.inngest.com/) for serverless queueing
@@ -73,9 +68,20 @@ Worker:
 npm run start:worker
 ```
 
+## Theming
+Theming is done using CSS variables. You can find global variables in routes/+layout.svelte
+
+## Environment Variables
+SESSION_KEY<br>
+GITHUB_CLIENT_ID<br>
+GITHUB_CLIENT_SECRET<br>
+INNGEST_EVENT_KEY<br>
+NODE_ENV<br>
+USE_NODE - Flag for using node adapter<br>
+
 ## Design Decisions
 
-## Why use Open Props and not Tailwind?
+### Why use Open Props and not Tailwind?
 
 There's a lot of starters with Tailwind at this point. I don't mind Tailwind but I think the main part I liked about Tailwind was the nice defaults it gave me while being easy to customize. Open props also provides nice defaults but uses normal CSS (which I like).
 

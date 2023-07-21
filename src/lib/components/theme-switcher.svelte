@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CarbonMoon from '~icons/carbon/moon';
 	import CarbonSun from '~icons/carbon/sun';
+	import LucideSettings from '~icons/lucide/settings';
 	import { onMount } from 'svelte';
 	import Button from './button.svelte';
 	import VisuallyHidden from './visually-hidden.svelte';
@@ -47,6 +48,10 @@
 	</Button>
 	<Button class="switcher" variant="primary" rounded={2} sz="md" on:click={setDark}>
 		<CarbonMoon />
+		<VisuallyHidden>Dark Mode</VisuallyHidden>
+	</Button>
+	<Button class="switcher" variant="primary" rounded={2} sz="md" on:click={setSystem}>
+		<LucideSettings />
 		<VisuallyHidden>Dark Mode</VisuallyHidden>
 	</Button>
 </div>

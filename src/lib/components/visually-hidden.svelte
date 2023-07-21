@@ -1,4 +1,7 @@
 <span class="sr-only">
+	<!-- @component
+	Visually hidden text for accessibility
+	-->
 	<slot />
 </span>
 
