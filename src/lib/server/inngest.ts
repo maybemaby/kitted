@@ -7,15 +7,14 @@ import {
 	type ServeHandler,
 	EventSchemas
 } from 'inngest';
-import { logger } from './logger';
-import type { Events } from './jobs/types';
+import { logger } from '$lib/logger';
+import type { Events } from '$lib/server/jobs/types';
 
 export const client = new Inngest({
 	name: 'sveltekit-ts-starter',
 	logger,
 	schemas: new EventSchemas().fromUnion<Events>()
 });
-
 
 export const serve: ServeHandler = (nameOrInngest, fns, opts) => {
 	const handler = new InngestCommHandler(

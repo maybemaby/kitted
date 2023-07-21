@@ -1,4 +1,4 @@
-import { client } from '$lib/inngest';
+import { client } from '$lib/server/inngest';
 
 export type HelloWorldEvent = {
 	name: 'test/hello.world';
@@ -7,7 +7,7 @@ export type HelloWorldEvent = {
 
 export const helloWorld = client.createFunction(
 	{
-		name: 'hello-world',
+		name: 'hello-world'
 	},
 	{
 		event: 'test/hello.world'
