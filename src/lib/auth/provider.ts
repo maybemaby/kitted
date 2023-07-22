@@ -1,6 +1,11 @@
 import * as oauth from 'oauth4webapi';
 import type { RequestEvent } from '@sveltejs/kit';
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env/static/private';
+import {
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+	GOOGLE_CLIENT_ID,
+	GOOGLE_CLIENT_SECRET
+} from '$env/static/private';
 
 type SocialAuthProviderPropsBase = {
 	// Unique provider name which will be used to resolve /auth/:provider routes
@@ -12,13 +17,15 @@ type SocialAuthProviderPropsBase = {
 	authParams: {
 		scope: string;
 		redirectUri: string;
+		// Specific to specific providers
+		prompt?: string;
 	};
 	// Paramater to determine if the state parameter of the OAuth flow should be used and checked
 	useState?: boolean;
 	usePkce?: boolean;
 	// openIdClientOptions?: Omit<ClientMetadata, 'client_id' | 'client_secret'>;
 	userInfoUrl?: string;
-	accessTokenEndpoint: string;
+	accessTokenEndpoint?: string;
 };
 
 export type SocialAuthProviderProps = SocialAuthProviderPropsBase & {
@@ -26,7 +33,7 @@ export type SocialAuthProviderProps = SocialAuthProviderPropsBase & {
 	authEndpoint?: string;
 };
 
-interface SocialAuthProvider {
+export interface SocialAuthProvider {
 	name: string;
 	generateAuthUrl(): Promise<{
 		url: string;
@@ -59,6 +66,24 @@ const GithubProviderProps: SocialAuthProviderProps = {
 	usePkce: true
 };
 
+const GoogleProviderProps: SocialAuthProviderProps = {
+	name: 'google',
+	discoveryUrl: 'https://accounts.google.com/.well-known/openid-configuration',
+	userInfoUrl: 'https://openidconnect.googleapis.com/v1/userinfo',
+	type: 'oidc',
+	useState: true,
+	usePkce: true,
+	client: {
+		client_id: GOOGLE_CLIENT_ID,
+		client_secret: GOOGLE_CLIENT_SECRET
+	},
+	authParams: {
+		scope: 'openid email profile',
+		redirectUri: 'http://localhost:5173/auth/google/callback'
+	},
+	issuer: 'https://accounts.google.com'
+};
+
 // TODO: Add support for OpenID Connect
 // TODO: Handle www-authenticate header
 
@@ -73,7 +98,7 @@ export async function createOAuthProvider(
 	}
 
 	if (props.discoveryUrl) {
-		const discoveryRes = await oauth.discoveryRequest(new URL(props.discoveryUrl), {
+		const discoveryRes = await oauth.discoveryRequest(new URL(props.issuer), {
 			algorithm: props.type
 		});
 
@@ -101,6 +126,10 @@ export async function createOAuthProvider(
 			authUrl.searchParams.set('scope', props.authParams.scope);
 			authUrl.searchParams.set('client_id', props.client.client_id);
 			authUrl.searchParams.set('redirect_uri', props.authParams.redirectUri);
+
+			if (props.authParams.prompt) {
+				authUrl.searchParams.set('prompt', props.authParams.prompt);
+			}
 
 			// Set state param
 			if (props.useState) {
@@ -155,11 +184,17 @@ export async function createOAuthProvider(
 					codeVerifier
 				);
 
-				const tokens = await oauth.processAuthorizationCodeOAuth2Response(
-					as,
-					props.client,
-					response
-				);
+				let tokens:
+					| oauth.OAuth2TokenEndpointResponse
+					| oauth.OpenIDTokenEndpointResponse
+					| oauth.OAuth2Error;
+
+				if (props.type === 'oauth2') {
+					tokens = await oauth.processAuthorizationCodeOAuth2Response(as, props.client, response);
+				} else {
+					tokens = await oauth.processAuthorizationCodeOpenIDResponse(as, props.client, response);
+				}
+
 				if (oauth.isOAuth2Error(tokens)) {
 					throw tokens;
 				}
@@ -175,11 +210,18 @@ export async function createOAuthProvider(
 					props.authParams.redirectUri,
 					''
 				);
-				const tokens = await oauth.processAuthorizationCodeOAuth2Response(
-					as,
-					props.client,
-					response
-				);
+
+				let tokens:
+					| oauth.OAuth2TokenEndpointResponse
+					| oauth.OpenIDTokenEndpointResponse
+					| oauth.OAuth2Error;
+
+				if (props.type === 'oauth2') {
+					tokens = await oauth.processAuthorizationCodeOAuth2Response(as, props.client, response);
+				} else {
+					tokens = await oauth.processAuthorizationCodeOpenIDResponse(as, props.client, response);
+				}
+
 				if (oauth.isOAuth2Error(tokens)) {
 					throw tokens;
 				}
@@ -191,3 +233,4 @@ export async function createOAuthProvider(
 }
 
 export const GithubProvider = await createOAuthProvider(GithubProviderProps);
+export const GoogleProvider = await createOAuthProvider(GoogleProviderProps);

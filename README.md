@@ -1,4 +1,4 @@
-# svelte-ts-starter
+# maybemaby/Kitted
 
 My personal opinionated SvelteKit starter.
 
@@ -75,6 +75,8 @@ Theming is done using CSS variables. You can find global variables in routes/+la
 SESSION_KEY<br>
 GITHUB_CLIENT_ID<br>
 GITHUB_CLIENT_SECRET<br>
+GOOGLE_CLIENT_ID<br>
+GOOGLE_CLIENT_SECRET<br>
 INNGEST_EVENT_KEY<br>
 NODE_ENV<br>
 USE_NODE - Flag for using node adapter<br>
