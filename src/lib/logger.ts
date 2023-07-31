@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export const logger = pino({
+	level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
 	formatters: {
 		log(object) {
 			if (object instanceof Request) {

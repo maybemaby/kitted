@@ -1,28 +1,71 @@
-<script>
+<script lang="ts">
+	import { superForm } from 'sveltekit-superforms/client';
 	import Button from '$lib/components/button.svelte';
 	import Card from '$lib/components/card.svelte';
-	import Input from '$lib/components/input.svelte';
+	import type { PageData } from './$types';
+	import Error from '$lib/components/error.svelte';
+	import SuperInput from '$lib/components/super-input.svelte';
+
+	export let data: PageData;
+	const form = superForm(data.form);
+
+	$: errors = form.errors;
 </script>
 
 <Card class="auth__content" rounded={2}>
 	<h1>Sign up</h1>
-	<form method="post">
+	<form use:form.enhance method="post">
 		<div class="row gap-5 names">
 			<div class="stack gap-2">
-				<label for="first_name">First Name</label>
-				<Input type="text" id="first_name" name="first_name" required />
+				<label for="firstName">First Name</label>
+				<SuperInput
+					type="text"
+					id="firstName"
+					name="firstName"
+					sForm={form}
+					field={'firstName'}
+					required
+				/>
+				<Error error={$errors.firstName} />
 			</div>
 			<div class="stack gap-2">
-				<label for="last_name">Last Name</label>
-				<Input type="text" id="last_name" name="last_name" required />
+				<label for="lastName">Last Name</label>
+				<SuperInput
+					type="text"
+					id="lastName"
+					name="lastName"
+					sForm={form}
+					field={'lastName'}
+					required
+				/>
+				<Error error={$errors.lastName} />
 			</div>
 		</div>
 		<label for="email">Email</label>
-		<Input type="email" id="email" name="email" required />
+		<SuperInput type="email" id="email" name="email" sForm={form} field={'email'} required />
+		<Error error={$errors.email} />
 		<label for="password">Password</label>
-		<Input type="password" id="password" name="password" required minlength={8} />
-		<label for="password_confirm">Confirm Password</label>
-		<Input type="password" id="password_confirm" name="password_confirm" required minlength={8} />
+		<SuperInput
+			type="password"
+			id="password"
+			name="password"
+			required
+			sForm={form}
+			field={'password'}
+			minlength={8}
+		/>
+		<Error error={$errors.password} />
+		<label for="passwordConfirm">Confirm Password</label>
+		<SuperInput
+			type="password"
+			id="passwordConfirm"
+			name="passwordConfirm"
+			required
+			minlength={8}
+			sForm={form}
+			field={'passwordConfirm'}
+		/>
+		<Error error={$errors.passwordConfirm} />
 		<Button class="auth_submit" rounded={2} type="submit">Login</Button>
 	</form>
 	<div>

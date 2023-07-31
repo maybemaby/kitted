@@ -9,7 +9,7 @@ type WorkerArgsNoName<DataType = any, ResultType = any, NameType extends string 
 ];
 
 /**
- * Creates a pair of functions to create a queue and a worker pair.
+ * Creates a pair of functions to create a typesafe queue and a worker pair.
  *
  * @example
  * const [createTestQueue, createTestWorker] = WorkerQPair<{ message: string }>(

@@ -1,10 +1,4 @@
-<script lang="ts">
-	import { cva, cx, type VariantProps } from 'class-variance-authority';
-	import type { HTMLInputAttributes } from 'svelte/elements';
-	import LucideEye from '~icons/lucide/eye';
-	import Button from './button.svelte';
-	import VisuallyHidden from './visually-hidden.svelte';
-
+<script lang="ts" context="module">
 	const input = cva('input', {
 		variants: {
 			variant: {
@@ -14,7 +8,15 @@
 		}
 	});
 
-	type InputBaseProps = VariantProps<typeof input>;
+	export type InputBaseProps = VariantProps<typeof input>;
+</script>
+
+<script lang="ts">
+	import { cva, cx, type VariantProps } from 'class-variance-authority';
+	import type { HTMLInputAttributes } from 'svelte/elements';
+	import LucideEye from '~icons/lucide/eye';
+	import Button from './button.svelte';
+	import VisuallyHidden from './visually-hidden.svelte';
 
 	interface $$Props extends InputBaseProps, HTMLInputAttributes {
 		class?: string | undefined;

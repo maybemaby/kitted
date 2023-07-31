@@ -1,10 +1,12 @@
 import { login } from '$lib/auth/http';
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { superValidate } from 'sveltekit-superforms/server';
+import { LoginSchema } from '$lib/auth/schema';
 
 export const actions = {
 	default: async (e) => {
-		const data = await e.request.formData();
+		const form = await superValidate(e.request, LoginSchema);
 
 		await login(e, 1);
 

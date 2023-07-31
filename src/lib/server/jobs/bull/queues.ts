@@ -21,9 +21,19 @@ export const [createPingQueue, createPingWorker] = WorkerQPair<
 				defaultJobOptions: {
 					removeOnComplete: 1000,
 					removeOnFail: 5000
+				},
+				connection: {
+					host: 'localhost',
+					port: 6379
 				}
 			},
 			undefined
-		]
+		],
+		workerOpts: {
+			connection: {
+				host: 'localhost',
+				port: 6379
+			}
+		}
 	}
 );
