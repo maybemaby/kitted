@@ -56,6 +56,13 @@ To build the bullmq worker:
 npm run build:worker
 ```
 
+To build the app container
+```bash
+docker build . -t kitted
+# if you want to access localhost databases from the container
+docker build . -t kitted --add-host host.docker.internal:host-gateway
+```
+
 ## Running
 
 Node app:

@@ -84,7 +84,6 @@ const GoogleProviderProps: SocialAuthProviderProps = {
 	issuer: 'https://accounts.google.com'
 };
 
-// TODO: Add support for OpenID Connect
 // TODO: Handle www-authenticate header
 
 export async function createOAuthProvider(
