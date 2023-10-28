@@ -72,9 +72,12 @@ const handleInngest = (async ({ event, resolve }) => {
 		return await resolve(event);
 	}
 
-	const handler = serve(client, [helloWorld]) as (
-		req: Parameters<Handle>['0']['event']
-	) => Response;
+	// const handler = serve(client, [helloWorld])
+	const handler = serve({
+		client,
+		functions: [helloWorld]
+	});
+
 	return handler(event);
 }) satisfies Handle;
 
