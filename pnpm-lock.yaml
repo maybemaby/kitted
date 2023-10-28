@@ -23,6 +23,9 @@ dependencies:
   pino:
     specifier: ^8.15.1
     version: 8.15.1
+  uncrypto:
+    specifier: ^0.1.3
+    version: 0.1.3
 
 devDependencies:
   '@csstools/postcss-global-data':

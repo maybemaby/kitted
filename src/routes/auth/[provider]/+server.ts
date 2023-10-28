@@ -1,13 +1,15 @@
-import { GithubProvider, GoogleProvider, type SocialAuthProvider } from '$lib/auth/provider';
+import { COOKIE_SECRET, NODE_ENV } from '$env/static/private';
+import { setSignedCookie } from '$lib/auth/http';
+import type { SocialAuthProvider } from '$lib/auth/provider';
 import { error, redirect, type RequestEvent } from '@sveltejs/kit';
-import oauth from 'oauth4webapi';
+import { ghProvider, googleProvider } from '../../../hooks.server';
 
 export async function GET(req: RequestEvent) {
 	const provider = req.params.provider;
 
 	const registeredProviders: Record<string, SocialAuthProvider> = {
-		github: GithubProvider,
-		google: GoogleProvider
+		github: ghProvider,
+		google: googleProvider
 	};
 
 	if (!provider) {
@@ -22,17 +24,19 @@ export async function GET(req: RequestEvent) {
 
 	const authParams = await selectedProvider.generateAuthUrl();
 
-	req.cookies.set('code_verifier', authParams.codeVerifier!, {
+	await setSignedCookie(req, 'code_verifier', authParams.codeVerifier!, COOKIE_SECRET, {
 		httpOnly: true,
 		maxAge: 60 * 5,
-		path: '/'
+		path: '/',
+		secure: NODE_ENV === 'production'
 	});
 
 	if (authParams.state) {
-		req.cookies.set('state', authParams.state, {
+		await setSignedCookie(req, 'state', authParams.state, COOKIE_SECRET, {
 			httpOnly: true,
 			maxAge: 60 * 5,
-			path: '/'
+			path: '/',
+			secure: NODE_ENV === 'production'
 		});
 	}
 

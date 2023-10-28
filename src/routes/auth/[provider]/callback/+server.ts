@@ -1,12 +1,13 @@
 import { error, json, type RequestEvent } from '@sveltejs/kit';
-import { GithubProvider, GoogleProvider, type SocialAuthProvider } from '$lib/auth/provider';
+import type { SocialAuthProvider } from '$lib/auth/provider';
+import { ghProvider, googleProvider } from '../../../../hooks.server';
 
 export async function GET(req: RequestEvent) {
 	const provider = req.params.provider;
 
 	const registeredProviders: Record<string, SocialAuthProvider> = {
-		github: GithubProvider,
-		google: GoogleProvider
+		github: ghProvider,
+		google: googleProvider
 	};
 
 	if (!provider) {
@@ -21,5 +22,7 @@ export async function GET(req: RequestEvent) {
 
 	const tokens = await selectedProvider.handleCallback(req, 'state', 'code_verifier');
 
-	return json(tokens);
+	const userInfo = await selectedProvider.getUserInfo(tokens.access_token);
+
+	return json({ ...tokens, ...userInfo });
 }

@@ -60,6 +60,7 @@
 		"inngest": "^2.6.0",
 		"oauth4webapi": "^2.3.0",
 		"open-props": "^1.5.15",
-		"pino": "^8.15.1"
+		"pino": "^8.15.1",
+		"uncrypto": "^0.1.3"
 	}
 }

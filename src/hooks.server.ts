@@ -4,8 +4,30 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { logger } from '$lib/logger';
 import { serve, client } from '$lib/server/jobs/inngest';
 import { helloWorld } from '$lib/server/jobs/hello-world';
-import { SESSION_KEY } from '$env/static/private';
+import {
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+	GOOGLE_CLIENT_ID,
+	GOOGLE_CLIENT_SECRET,
+	SESSION_KEY,
+	ORIGIN
+} from '$env/static/private';
 import { createPingQueue } from '$lib/server/jobs/bull/queues';
+import { GithubProvider, GoogleProvider } from '$lib/auth/provider';
+
+export const ghProvider = new GithubProvider(
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+	'user:email',
+	`${ORIGIN}/auth/github/callback`
+);
+
+export const googleProvider = new GoogleProvider(
+	GOOGLE_CLIENT_ID,
+	GOOGLE_CLIENT_SECRET,
+	'openid email profile',
+	`${ORIGIN}/auth/google/callback`
+);
 
 const pingQueue = createPingQueue();
 
