@@ -2,7 +2,7 @@ import { COOKIE_SECRET, NODE_ENV } from '$env/static/private';
 import { setSignedCookie } from '$lib/auth/http';
 import type { SocialAuthProvider } from '$lib/auth/provider';
 import { error, redirect, type RequestEvent } from '@sveltejs/kit';
-import { ghProvider, googleProvider } from '../../../hooks.server';
+import { ghProvider, googleProvider } from '../../../../hooks.server';
 
 export async function GET(req: RequestEvent) {
 	const provider = req.params.provider;

@@ -1,6 +1,6 @@
 import { error, json, type RequestEvent } from '@sveltejs/kit';
 import type { SocialAuthProvider } from '$lib/auth/provider';
-import { ghProvider, googleProvider } from '../../../../hooks.server';
+import { ghProvider, googleProvider } from '../../../../../hooks.server';
 
 export async function GET(req: RequestEvent) {
 	const provider = req.params.provider;
