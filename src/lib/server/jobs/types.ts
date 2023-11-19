@@ -1,3 +1,3 @@
-import type { HelloWorldEvent } from "./hello-world";
+import type { HelloWorldEvent } from './hello-world';
 
 export type Events = HelloWorldEvent;

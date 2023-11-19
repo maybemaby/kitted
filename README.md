@@ -3,6 +3,7 @@
 My personal opinionated SvelteKit starter.
 
 Features:
+
 - [open-props](https://open-props.style/) for styling
 - [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/) for unit testing
 - [class-variance-authority](https://github.com/joe-bell/cva) for design systems
@@ -13,7 +14,6 @@ Features:
   - [bullmq](https://github.com/taskforcesh/bullmq) for serverful queueing
   - [oauth4webapi](https://github.com/panva/oauth4webapi) and some wrapper code for OAuth.
     - Github and Google providers included
-
 
 ## Developing
 
@@ -57,6 +57,7 @@ npm run build:worker
 ```
 
 To build the app container
+
 ```bash
 docker build . -t kitted
 # if you want to access localhost databases from the container
@@ -66,19 +67,23 @@ docker build . -t kitted --add-host host.docker.internal:host-gateway
 ## Running
 
 Node app:
+
 ```bash
 npm run start:node
 ```
 
 Worker:
+
 ```bash
 npm run start:worker
 ```
 
 ## Theming
+
 Theming is done using CSS variables. You can find global variables in routes/+layout.svelte
 
 ## Environment Variables
+
 SESSION_KEY<br>
 GITHUB_CLIENT_ID<br>
 GITHUB_CLIENT_SECRET<br>
@@ -95,12 +100,13 @@ USE_NODE - Flag for using node adapter<br>
 There's a lot of starters with Tailwind at this point. I don't mind Tailwind but I think the main part I liked about Tailwind was the nice defaults it gave me while being easy to customize. Open props also provides nice defaults but uses normal CSS (which I like).
 
 ### Why not use Auth library xyz? (i.e NextAuth, Lucia, Supabase, etc.)
+
 Personal preference, I don't like the APIs these libraries that require integrating with an ORM/Database have. Too much abstraction if all you want is sessions, OAuth, and want custom logic.
 
 Trying to avoid creating a starter kit that requires signing up for too many services. (See reasoning for [inngest](#why-use-inngest) below.) Anyway, my auth decisions are pretty easy to rip out and override so go wild.
 
-
 ### Why use Inngest?
+
 If you go the node hosting route, there's plenty of queueing options available (SQS, bullmq, RabbitMq, etc.) Although you'll have to add a separate worker process.
 
 Of the serverless options, Inngest seemed to be nicest to integrate with, offers a generous free plan, works fine even if you're not serverless, and has local development.

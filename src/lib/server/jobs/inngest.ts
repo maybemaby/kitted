@@ -1,12 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
-import {
-	headerKeys,
-	InngestCommHandler,
-	queryKeys,
-	Inngest,
-	type ServeHandlerOptions,
-	EventSchemas
-} from 'inngest';
+import { InngestCommHandler, Inngest, type ServeHandlerOptions, EventSchemas } from 'inngest';
 import { logger } from '$lib/logger';
 import type { Events } from '$lib/server/jobs/types';
 
@@ -27,9 +20,10 @@ export const serve = (opts: ServeHandlerOptions) => {
 				body: () => req.request.json(),
 				headers: (key) => req.request.headers.get(key),
 				method: () => req.request.method,
-				url: () => new URL(req.url, `https://${req.request.headers.get("host") || ""}`),
-				transformResponse: (res) => new Response(res.body, { status: res.status, headers: res.headers })
-			}
+				url: () => new URL(req.url, `https://${req.request.headers.get('host') || ''}`),
+				transformResponse: (res) =>
+					new Response(res.body, { status: res.status, headers: res.headers })
+			};
 		}
 	});
 

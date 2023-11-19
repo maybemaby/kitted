@@ -1,5 +1,5 @@
 // ts-node doesn't work without .js extension
-import { createPingWorker } from './lib/server/jobs/bull/queues.js';
+import { createPingWorker } from '$lib/server/jobs/bull/queues';
 
 console.info('Starting worker');
 
