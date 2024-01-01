@@ -16,7 +16,7 @@ export const actions: Actions = {
 
 		await login(e, 1);
 
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 };
 

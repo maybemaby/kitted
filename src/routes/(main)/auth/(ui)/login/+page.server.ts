@@ -10,6 +10,6 @@ export const actions = {
 
 		await login(e, 1);
 
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 } satisfies Actions;

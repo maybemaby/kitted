@@ -9,7 +9,7 @@ export const GET = async (e: RequestEvent) => {
 	const job = await queue.getJob(id);
 
 	if (!job) {
-		throw error(404, 'Job not found');
+		error(404, 'Job not found');
 	}
 
 	return json(job.asJSON());

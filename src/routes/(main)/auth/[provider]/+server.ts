@@ -13,13 +13,13 @@ export async function GET(req: RequestEvent) {
 	};
 
 	if (!provider) {
-		throw error(404, 'Not found');
+		error(404, 'Not found');
 	}
 
 	const selectedProvider = registeredProviders[provider];
 
 	if (!selectedProvider) {
-		throw error(404, 'Not found');
+		error(404, 'Not found');
 	}
 
 	const authParams = await selectedProvider.generateAuthUrl();
@@ -40,5 +40,5 @@ export async function GET(req: RequestEvent) {
 		});
 	}
 
-	throw redirect(302, authParams.url);
+	redirect(302, authParams.url);
 }

@@ -11,13 +11,13 @@ export async function GET(req: RequestEvent) {
 	};
 
 	if (!provider) {
-		throw error(404, 'Not found');
+		error(404, 'Not found');
 	}
 
 	const selectedProvider = registeredProviders[provider];
 
 	if (!selectedProvider) {
-		throw error(404, 'Not found');
+		error(404, 'Not found');
 	}
 
 	const tokens = await selectedProvider.handleCallback(req, 'state', 'code_verifier');
