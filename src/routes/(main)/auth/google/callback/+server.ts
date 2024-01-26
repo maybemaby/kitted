@@ -1,28 +1,11 @@
 import { error, json, type RequestEvent } from '@sveltejs/kit';
-import { OAuth2RequestError, Google, GitHub } from 'arctic';
+import { OAuth2RequestError } from 'arctic';
 import { parseJWT } from 'oslo/jwt';
-import { ghProvider, googleProvider } from '../../../../../hooks.server';
 import { getSignedCookie } from '$lib/auth/http';
 import { COOKIE_SECRET } from '$env/static/private';
+import { googleProvider } from '../../../../../hooks.server';
 
 export async function GET(req: RequestEvent) {
-	const provider = req.params.provider;
-
-	const registeredProviders: Record<string, Google | GitHub> = {
-		github: ghProvider,
-		google: googleProvider
-	};
-
-	if (!provider) {
-		error(404, 'Not found');
-	}
-
-	const selectedProvider = registeredProviders[provider];
-
-	if (!selectedProvider) {
-		error(404, 'Not found');
-	}
-
 	const code = req.url.searchParams.get('code');
 	const state = req.url.searchParams.get('state');
 
@@ -38,7 +21,7 @@ export async function GET(req: RequestEvent) {
 	}
 
 	try {
-		const tokens = await selectedProvider.validateAuthorizationCode(code, storedCodeVerifier);
+		const tokens = await googleProvider.validateAuthorizationCode(code, storedCodeVerifier);
 
 		req.cookies.delete('state', {
 			path: '/',
@@ -54,11 +37,19 @@ export async function GET(req: RequestEvent) {
 			sameSite: 'lax'
 		});
 
-		// @ts-expect-error For providers that are openID
-		if (tokens.idToken!) {
+		if (tokens.idToken) {
 			const jwt = parseJWT(tokens.idToken as unknown as string);
 
-			return json({ tokens, jwt });
+			return json({
+				tokens,
+				user: jwt?.payload as {
+					iss: string;
+					email: string;
+					email_verified: boolean;
+					name: string;
+					picture: string;
+				}
+			});
 		}
 
 		return json({ tokens });
