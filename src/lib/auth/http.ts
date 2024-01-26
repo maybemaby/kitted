@@ -72,7 +72,7 @@ export async function setSignedCookie(
 	name: string,
 	value: string,
 	secret: string,
-	cookieOpts?: CookieSerializeOptions
+	cookieOpts: CookieSerializeOptions
 ) {
 	const cookie = await createSignedCookieValue(value, secret);
 

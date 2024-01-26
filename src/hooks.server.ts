@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import { GitHub, Google } from 'arctic';
 
 import { logger } from '$lib/logger';
 import { serve, client } from '$lib/server/jobs/inngest';
@@ -13,21 +14,16 @@ import {
 	ORIGIN
 } from '$env/static/private';
 import { createPingQueue } from '$lib/server/jobs/bull/queues';
-import { GithubProvider, GoogleProvider } from '$lib/auth/provider';
 
-export const ghProvider = new GithubProvider(
-	GITHUB_CLIENT_ID,
-	GITHUB_CLIENT_SECRET,
-	'user:email',
-	`${ORIGIN}/auth/github/callback`
-);
-
-export const googleProvider = new GoogleProvider(
+export const googleProvider = new Google(
 	GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET,
-	'openid email profile',
 	`${ORIGIN}/auth/google/callback`
 );
+
+export const ghProvider = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, {
+	redirectURI: `${ORIGIN}/auth/github/callback`
+});
 
 const pingQueue = createPingQueue();
 

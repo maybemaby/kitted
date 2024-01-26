@@ -1,13 +1,15 @@
 import { COOKIE_SECRET, NODE_ENV } from '$env/static/private';
 import { setSignedCookie } from '$lib/auth/http';
-import type { SocialAuthProvider } from '$lib/auth/provider';
 import { error, redirect, type RequestEvent } from '@sveltejs/kit';
 import { ghProvider, googleProvider } from '../../../../hooks.server';
+import { authScopes } from '$lib/auth/provider';
+import type { GitHub, Google, OAuth2Provider, OAuth2ProviderWithPKCE } from 'arctic';
+import { generateCodeVerifier, generateState } from 'arctic';
 
 export async function GET(req: RequestEvent) {
 	const provider = req.params.provider;
 
-	const registeredProviders: Record<string, SocialAuthProvider> = {
+	const registeredProviders: Record<string, Google | GitHub> = {
 		github: ghProvider,
 		google: googleProvider
 	};
@@ -22,23 +24,28 @@ export async function GET(req: RequestEvent) {
 		error(404, 'Not found');
 	}
 
-	const authParams = await selectedProvider.generateAuthUrl();
+	const state = generateState();
+	const codeVerifier = generateCodeVerifier();
 
-	await setSignedCookie(req, 'code_verifier', authParams.codeVerifier!, COOKIE_SECRET, {
+	const scopes = authScopes[provider];
+
+	const url = await selectedProvider.createAuthorizationURL(state, codeVerifier, {
+		scopes
+	});
+
+	await setSignedCookie(req, 'code_verifier', codeVerifier, COOKIE_SECRET, {
 		httpOnly: true,
 		maxAge: 60 * 5,
 		path: '/',
 		secure: NODE_ENV === 'production'
 	});
 
-	if (authParams.state) {
-		await setSignedCookie(req, 'state', authParams.state, COOKIE_SECRET, {
-			httpOnly: true,
-			maxAge: 60 * 5,
-			path: '/',
-			secure: NODE_ENV === 'production'
-		});
-	}
+	await setSignedCookie(req, 'state', state, COOKIE_SECRET, {
+		httpOnly: true,
+		maxAge: 60 * 5,
+		path: '/',
+		secure: NODE_ENV === 'production'
+	});
 
-	redirect(302, authParams.url);
+	redirect(302, url);
 }

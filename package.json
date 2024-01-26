@@ -56,11 +56,13 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"arctic": "^1.0.0",
 		"bullmq": "^4.17.0",
 		"class-variance-authority": "^0.7.0",
 		"inngest": "^3.10.0",
 		"oauth4webapi": "^2.6.0",
 		"open-props": "^1.6.17",
+		"oslo": "^1.0.1",
 		"pino": "^8.17.2",
 		"uncrypto": "^0.1.3"
 	}
